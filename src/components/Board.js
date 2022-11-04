@@ -3,6 +3,13 @@ import React from "react";
 export default function Board(props) {
     function handleClick(event) {
         const theSquare = event.target
+        const theId = theSquare.id
+        props.setWinner(prevState => {
+            prevState[theId] = props.turn
+            return (
+                [...prevState]
+            )
+        })
         if(theSquare.innerText !== '') {
             return
         }
