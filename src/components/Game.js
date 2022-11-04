@@ -16,6 +16,7 @@ export default function Game(props) {
                            [0, 4, 8],
                            [2, 4, 6]]
 
+    let won = ''
     for(let i = 0; i < winConditions.length; i++) {
         let condition = winConditions[i]
         let conditionA = winner[condition[0]]
@@ -23,19 +24,27 @@ export default function Game(props) {
         let conditionC = winner[condition[2]]
 
         if(conditionA === conditionB && conditionC === conditionA && conditionA !== '') {
-            console.log(conditionA + ' won')
+            won = conditionA
         }
     }
-                         
+
+    const [play, setPlay] = React.useState(false)
+    
+                
+    function togglePlay() {
+        setPlay(true)
+    }
     return (
         <div>
-            <div className="turn">{turn}'s Turn</div>
-            <Board 
+            <div className="start"> {!play &&<button onClick={togglePlay} className='startbtn'>Start</button>}</div>
+            {won && <h2 className="win">{won} Won!</h2>}
+            {play && <div className="turn">{turn}'s Turn</div>}
+            {play && <Board 
             turn={turn}
             setTurn={setTurn}
             winner={winner}
             setWinner={setWinner}
-            />
+            />}
         </div>
     )
 }

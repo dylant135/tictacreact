@@ -24,4 +24,22 @@
 .turn {
   text-align: center;
   font-size: 2em;
+  margin: 7px 0;
+}
+
+.startbtn {
+  font-size: 1.5em;
+  padding: 7px 10px;
+  margin: 15px 0;
+}
+
+.start {
+  text-align: center;
+  margin: auto;
+  width: 50vw;
+}
+
+.win {
+  text-align: center;
+  margin: 7px 0;
 }
