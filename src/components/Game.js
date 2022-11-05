@@ -3,6 +3,7 @@ import Board from "./Board";
 
 export default function Game(props) {
     const [turn, setTurn] = React.useState('X')
+    const [play, setPlay] = React.useState(false)
     const [winner, setWinner] = React.useState(
         ['', '', '', '', '', '', '', '', '']
     )
@@ -27,23 +28,50 @@ export default function Game(props) {
             won = conditionA
         }
     }
-
-    const [play, setPlay] = React.useState(false)
     
+    function handleClick(event) {
+        if(won) {
+            return
+        }
+        if(!play) {
+            return
+        }
+        const theSquare = event.target
+        const theId = theSquare.id
+        setWinner(prevState => {
+            prevState[theId] = turn
+            return (
+                [...prevState]
+            )
+        })
+        if(theSquare.innerText !== '') {
+            return
+        }
+        theSquare.innerText = turn
+        setTurn(prevState => {
+            if(prevState === 'X') {
+                return prevState = 'O'
+            } else {
+                return prevState = 'X'
+            }
+        })
+    }
                 
     function togglePlay() {
         setPlay(true)
     }
     return (
         <div>
-            <div className="start"> {!play &&<button onClick={togglePlay} className='startbtn'>Start</button>}</div>
+            <div className="start">{!play && <button onClick={togglePlay} className='startbtn'>Start</button>}</div>
             {won && <h2 className="win">{won} Won!</h2>}
-            {play && <div className="turn">{turn}'s Turn</div>}
+            {play && !won && <div className="turn">{turn}'s Turn</div>}
             {play && <Board 
             turn={turn}
             setTurn={setTurn}
             winner={winner}
             setWinner={setWinner}
+            play={play}
+            handleClick={handleClick}
             />}
         </div>
     )
